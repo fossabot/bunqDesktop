@@ -10,7 +10,7 @@ import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListSubheader from "@material-ui/core/ListSubheader";
-import ListItemText  from "@material-ui/core/ListItemText";
+import ListItemText from "@material-ui/core/ListItemText";
 import Typography from "@material-ui/core/Typography";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
@@ -21,7 +21,8 @@ import TypographyTranslate from "../../Components/TranslationHelpers/Typography"
 import { cardUpdate } from "../../Actions/card";
 import {
     cardUpdateCvc2Codes,
-    cardCvc2CodesClear
+    cardCvc2CodesClear,
+    cardGenerateCvc2
 } from "../../Actions/card_cvc2";
 
 const styles = {
@@ -96,6 +97,11 @@ class Card extends React.Component {
             this.props.user.id,
             cardInfo.CardDebit.id
         );
+    };
+
+    cardGenerateCvc2 = event => {
+        const cardInfo = this.props.cards[this.state.selectedCardIndex];
+        this.props.cardGenerateCvc2(this.props.user.id, cardInfo.CardDebit.id);
     };
 
     handleKeyDown = event => {
@@ -308,12 +314,13 @@ class Card extends React.Component {
                             t("View CVC Codes")
                         )}
                     </Button>
-                    <TypographyTranslate
-                        variant="caption"
-                        style={{ textAlign: "center" }}
-                    >
-                        This does not create new codes yet!
-                    </TypographyTranslate>
+                    {/*<TypographyTranslate*/}
+                    {/*variant="caption"*/}
+                    {/*style={{ textAlign: "center" }}*/}
+                    {/*>*/}
+                    {/*This does not create new codes yet!*/}
+                    {/*</TypographyTranslate>*/}
+                    <Button onClick={this.cardGenerateCvc2}>test</Button>
                 </React.Fragment>
             );
         }
@@ -402,6 +409,8 @@ const mapDispatchToProps = (dispatch, props) => {
         // list all cvc2 codes
         cardUpdateCvc2Codes: (userId, cardId) =>
             dispatch(cardUpdateCvc2Codes(BunqJSClient, userId, cardId)),
+        cardGenerateCvc2: (userId, cardId) =>
+            dispatch(cardGenerateCvc2(BunqJSClient, userId, cardId)),
         cardCvc2CodesClear: () => dispatch(cardCvc2CodesClear())
     };
 };

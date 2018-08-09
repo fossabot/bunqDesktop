@@ -44,25 +44,25 @@ export function cardUpdateCvc2Codes(BunqJSClient, user_id, card_id) {
     };
 }
 
-// export function cardGenerateCvc2(BunqJSClient, user_id, card_id) {
-//     return dispatch => {
-//         dispatch(cardCvc2Loading());
-//         BunqJSClient.api.cardCvc2
-//             .post(user_id, card_id)
-//             .then(cardsCvc2Codes => {
-//                 console.log(cardsCvc2Codes);
-//                 dispatch(cardCvc2NotLoading());
-//             })
-//             .catch(error => {
-//                 dispatch(cardCvc2NotLoading());
-//                 BunqErrorHandler(
-//                     dispatch,
-//                     error,
-//                     "We failed to generate a new CVC code"
-//                 );
-//             });
-//     };
-// }
+export function cardGenerateCvc2(BunqJSClient, user_id, card_id) {
+    return dispatch => {
+        dispatch(cardCvc2Loading());
+        BunqJSClient.api.cardCvc2
+            .post(user_id, card_id)
+            .then(cardsCvc2Codes => {
+                console.log(cardsCvc2Codes);
+                dispatch(cardCvc2NotLoading());
+            })
+            .catch(error => {
+                dispatch(cardCvc2NotLoading());
+                BunqErrorHandler(
+                    dispatch,
+                    error,
+                    "We failed to generate a new CVC code"
+                );
+            });
+    };
+}
 
 export function cardCvc2Loading() {
     return { type: "CARD_CVC2_IS_LOADING" };
